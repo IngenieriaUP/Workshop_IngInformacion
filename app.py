@@ -11,10 +11,12 @@ app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 
 app.layout = html.Div(children=[
 
-    html.H1(children="Pacific's Telecoms", style={'text-align': 'center'}),
+    html.Link(href='https://fonts.googleapis.com/css?family=Courgette',rel='stylesheet'),
+
+    html.H1(children="Clarofónica", style={'text-align': 'center','font-family': 'Courgette', 'font-size':'80px','padding-top':'10px'}),
 
     html.Div([
-        html.H3(children='Caracteristicas'),
+        html.H3(children='Carácteristicas'),
 
         html.Div([
             html.P(children='¿El cliente tiene línea múltiple?',
@@ -175,7 +177,7 @@ app.layout = html.Div(children=[
 
         ], style={}),
 
-    ], style={'float': 'left', 'width': '60%','padding-left':'20px'}),
+    ], style={'float': 'left', 'width': '45%','padding-left':'5vw'}),
 
     html.Div([
         html.Div([
@@ -184,17 +186,14 @@ app.layout = html.Div(children=[
             html.Button('Consultar Cliente', id='button',
                         style={'clear': 'both', 'width': '100%', 'font-size': '15px'}),
             html.H1(""),
-            html.H1(""),
-            html.H4(children="La probabilidad de que el cliente cambie de operadoora es de:",
-                    style={'text-align': 'center'}),
+            html.H4(children="La puntuación del cliente es de:",style={'text-align': 'center','margin':'0px'}),
 
-            html.Div(id='output-container-button', children='------', style={'font-size': '30px'}),
-            html.H1(""),
-            html.Img(id='image',style={'width':'200px'})
+            html.Div(id='output-container-button', children='------', style={'font-size': '80px', 'text-align': 'center'}),
+            html.Img(id='image',style={'width':'200px','display': 'block','margin-left':'auto','margin-right':'auto'})
         ], style={'width': '80%'}),
 
-    ], style={'width': '35%','float': 'right'})
-])
+    ], style={'width': '49%','float': 'right'})
+], style={'background-image':'url(http://www.lksur.com.uy/imagenes/t1.jpg)'})
 
 
 @app.callback([
@@ -215,11 +214,12 @@ app.layout = html.Div(children=[
 def update_output(n_clicks, value1, value2, value3, value4, value5, value6, value7, value8, value9, value10, value11):
     sumaProducto=-0.457+float(value1)*0.1735+float(value2)*-0.3614+float(value3)*0.8379+float(value4)*0.2526+float(value5)*-0.407+float(value6)*0.2809+float(value7)*0.2522+float(value8)*-0.1561+float(value9)*0.3443+float(value10)*-0.3728+float(value11)*-0.7783
     probabilidad= math.exp(sumaProducto)/(1+math.exp(sumaProducto))
-    if probabilidad>0.15:
-        return round(probabilidad*100,2),'https://cdn.shopify.com/s/files/1/1061/1924/files/Face_With_Rolling_Eyes_Emoji.png?6135488989279264585'
+    if probabilidad>0.2:
+        return str(round(probabilidad * 100,2)), 'https://www.somosmamas.com.ar/wp-content/uploads/2017/11/emoji-carita-triste.png'
+    elif probabilidad>0.1:
+        return str(round(probabilidad * 100,2)), 'https://cdn.shopify.com/s/files/1/1061/1924/files/Face_With_Rolling_Eyes_Emoji.png?6135488989279264585'
     else:
-        return round(probabilidad * 100,2), 'http://www.stickpng.com/assets/images/580b57fcd9996e24bc43c4bd.png'
+        return str(round(probabilidad * 100, 2)), 'http://www.stickpng.com/assets/images/580b57fcd9996e24bc43c4bd.png'
 
 if __name__ == '__main__':
     app.run_server(debug=True)
-
