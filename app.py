@@ -196,9 +196,8 @@ app.layout = html.Div(children=[
 ], style={'background-image':'url(http://www.lksur.com.uy/imagenes/t1.jpg)'})
 
 
-@app.callback([
-    dash.dependencies.Output('output-container-button', 'children'),
-    dash.dependencies.Output('image', 'src')],
+@app.callback(
+    dash.dependencies.Output('image', 'src'),
     [dash.dependencies.Input('button', 'n_clicks')],
     [dash.dependencies.State('q1', 'value'),
      dash.dependencies.State('q2', 'value'),
@@ -212,14 +211,45 @@ app.layout = html.Div(children=[
      dash.dependencies.State('q10', 'value'),
      dash.dependencies.State('q11', 'value')])
 def update_output(n_clicks, value1, value2, value3, value4, value5, value6, value7, value8, value9, value10, value11):
-    sumaProducto=-0.457+float(value1)*0.1735+float(value2)*-0.3614+float(value3)*0.8379+float(value4)*0.2526+float(value5)*-0.407+float(value6)*0.2809+float(value7)*0.2522+float(value8)*-0.1561+float(value9)*0.3443+float(value10)*-0.3728+float(value11)*-0.7783
-    probabilidad= math.exp(sumaProducto)/(1+math.exp(sumaProducto))
-    if probabilidad>0.2:
-        return str(round(probabilidad * 100,2)), 'https://www.somosmamas.com.ar/wp-content/uploads/2017/11/emoji-carita-triste.png'
-    elif probabilidad>0.1:
-        return str(round(probabilidad * 100,2)), 'https://cdn.shopify.com/s/files/1/1061/1924/files/Face_With_Rolling_Eyes_Emoji.png?6135488989279264585'
+    if n_clicks != None:
+        sumaProducto=-0.457+float(value1)*0.1735+float(value2)*-0.3614+float(value3)*0.8379+float(value4)*0.2526+float(value5)*-0.407+float(value6)*0.2809+float(value7)*0.2522+float(value8)*-0.1561+float(value9)*0.3443+float(value10)*-0.3728+float(value11)*-0.7783
+        probabilidad= math.exp(sumaProducto)/(1+math.exp(sumaProducto))
+        if probabilidad>0.2:
+            return 'https://www.somosmamas.com.ar/wp-content/uploads/2017/11/emoji-carita-triste.png'
+        elif probabilidad>0.1:
+            return 'https://cdn.shopify.com/s/files/1/1061/1924/files/Face_With_Rolling_Eyes_Emoji.png?6135488989279264585'
+        else:
+            return 'http://www.stickpng.com/assets/images/580b57fcd9996e24bc43c4bd.png'
     else:
-        return str(round(probabilidad * 100, 2)), 'http://www.stickpng.com/assets/images/580b57fcd9996e24bc43c4bd.png'
+        pass
+
+@app.callback(
+    dash.dependencies.Output('output-container-button', 'children'),
+    [dash.dependencies.Input('button', 'n_clicks')],
+    [dash.dependencies.State('q1', 'value'),
+     dash.dependencies.State('q2', 'value'),
+     dash.dependencies.State('q3', 'value'),
+     dash.dependencies.State('q4', 'value'),
+     dash.dependencies.State('q5', 'value'),
+     dash.dependencies.State('q6', 'value'),
+     dash.dependencies.State('q7', 'value'),
+     dash.dependencies.State('q8', 'value'),
+     dash.dependencies.State('q9', 'value'),
+     dash.dependencies.State('q10', 'value'),
+     dash.dependencies.State('q11', 'value')])
+def update_output(n_clicks, value1, value2, value3, value4, value5, value6, value7, value8, value9, value10, value11):
+    if n_clicks != None:
+        sumaProducto=-0.457+float(value1)*0.1735+float(value2)*-0.3614+float(value3)*0.8379+float(value4)*0.2526+float(value5)*-0.407+float(value6)*0.2809+float(value7)*0.2522+float(value8)*-0.1561+float(value9)*0.3443+float(value10)*-0.3728+float(value11)*-0.7783
+        probabilidad= math.exp(sumaProducto)/(1+math.exp(sumaProducto))
+        if probabilidad>0.2:
+            return str(round(probabilidad * 100,2))
+        elif probabilidad>0.1:
+            return str(round(probabilidad * 100,2))
+        else:
+            return str(round(probabilidad * 100, 2))
+    else:
+        pass
+
 
 if __name__ == '__main__':
     app.run_server(debug=True)
